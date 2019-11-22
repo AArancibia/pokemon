@@ -1,0 +1,26 @@
+<nz-input-group [nzSuffix]="suffixIconSearch">
+  <!-- <input type="text" nz-input placeholder="Buscar Pokemon..." /> -->
+  <input
+    placeholder=""
+    [(ngModel)]="inputValue"
+    (ngModelChange)="onChange($event)"
+    [nzAutocomplete]="auto"
+    nz-input
+  />
+  <nz-autocomplete [nzDataSource]="filteredOptions" #auto></nz-autocomplete>
+</nz-input-group>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>
+
+<!-- 
+<div class="example-input">
+    <input
+      placeholder="try to type \`b\`"
+      nz-input
+      [(ngModel)]="inputValue"
+      (ngModelChange)="onChange($event)"
+      [nzAutocomplete]="auto"
+    />
+    <nz-autocomplete [nzDataSource]="filteredOptions" #auto></nz-autocomplete>
+  </div> -->

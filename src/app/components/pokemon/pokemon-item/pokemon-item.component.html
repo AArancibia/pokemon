@@ -1,0 +1,15 @@
+<div nz-col nzMd="6" style="padding: 1rem;">
+  <nz-card style="height: 400px;" nzHoverable [nzCover]="coverTemplate">
+    <nz-card-meta
+      [nzTitle]="pokemon.name"
+      [nzDescription]="descriptionTemplate"
+    ></nz-card-meta>
+  </nz-card>
+  <ng-template #descriptionTemplate>
+    <p *ngFor="let type of pokemon.types">{{ type.type.name }}</p>
+    <!-- tipoPokemon -->
+  </ng-template>
+  <ng-template #coverTemplate>
+    <img [alt]="pokemon.name" [src]="pokemon.sprites.back_default" />
+  </ng-template>
+</div>

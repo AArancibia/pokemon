@@ -1,0 +1,15 @@
+<div nz-row>
+  <div nz-col nzMd="24">
+    <app-buscador (buscar)="filtrarPokemon($event)"></app-buscador>
+    <p>{{ filtro }}</p>
+  </div>
+  <div nz-col nzMd="24">
+    <app-pokemon-tags (tipo)="filtrarTipo($event)"></app-pokemon-tags>
+  </div>
+  <div nz-col nzMd="24">
+    <app-pokemon-item
+      *ngFor="let pokemon of dataToShow"
+      [pokemon]="pokemon"
+    ></app-pokemon-item>
+  </div>
+</div>
