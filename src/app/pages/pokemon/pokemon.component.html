@@ -7,9 +7,12 @@
     <app-pokemon-tags (tipo)="filtrarTipo($event)"></app-pokemon-tags>
   </div>
   <div nz-col nzMd="24">
-    <app-pokemon-item
-      *ngFor="let pokemon of dataToShow"
-      [pokemon]="pokemon"
-    ></app-pokemon-item>
+    <p *ngIf="showPokemons | async">ESTA CARGANDO</p>
+    <div *ngIf="!(showPokemons | async)">
+      <app-pokemon-item
+        *ngFor="let pokemon of $pokemonsFetch | async"
+        [pokemon]="pokemon"
+      ></app-pokemon-item>
+    </div>
   </div>
 </div>

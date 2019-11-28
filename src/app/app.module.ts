@@ -12,6 +12,7 @@ import es from "@angular/common/locales/es";
 import { SigninComponent } from "@app/auth/signin/signin.component";
 import { PagesModule } from "./pages/pages.module";
 import { FiltroPokemonPipe } from "./shared/pipes/filtro-pokemon.pipe";
+import { RootStoreModule } from './root-store/root-store.module';
 
 registerLocaleData(es);
 
@@ -24,7 +25,8 @@ registerLocaleData(es);
     NgZorroAntdModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RootStoreModule
   ],
   providers: [{ provide: NZ_I18N, useValue: es_ES }],
   bootstrap: [AppComponent]

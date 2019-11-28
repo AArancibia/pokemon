@@ -1,6 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { PokemonService } from "@app/core/services/pokemon.service";
 import { Pokemon } from "@app/core/models/pokemon.model";
+import { Store, select } from "@ngrx/store";
+import * as fromPokemon from "@app/root-store/pokemon/pokemon.state";
+import {
+  selectAllPokemons,
+  pokemonsIsLoading,
+  filterPokemonsByName,
+  filterPokemonsByType
+} from "@app/root-store/pokemon/pokemon.selector";
+import { Observable } from "rxjs";
+import { FetchPokemonStartAction } from "@app/root-store/pokemon/pokemon.actions";
+import { PokemonActionTypes } from "@app/root-store/pokemon/pokemon.types";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-pokemon",
@@ -8,57 +20,34 @@ import { Pokemon } from "@app/core/models/pokemon.model";
   styleUrls: ["./pokemon.component.scss"]
 })
 export class PokemonComponent implements OnInit {
-  pokemons: Pokemon[] = [];
   filtro: string;
-  dataToShow: Pokemon[] = [];
+  $pokemonsFetch: Observable<Pokemon[]>;
+  showPokemons: Observable<boolean>;
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(
+    private pokemonService: PokemonService,
+    private store: Store<fromPokemon.State>
+  ) {}
 
   ngOnInit() {
-    this.getPokemons();
+    this.store.dispatch(new FetchPokemonStartAction());
+    this.showPokemons = this.store.pipe(select(pokemonsIsLoading));
+    this.$pokemonsFetch = this.store.pipe(select(selectAllPokemons));
   }
 
   getPokemons() {
-    this.pokemonService.getPokemons().subscribe(
-      (pokemons: Pokemon) => {
-        this.pokemons = [...this.pokemons, pokemons];
-        this.dataToShow = this.pokemons;
-      },
-      error => console.log(error),
-      () => {
-        this.pokemons.sort((a, b) => (a.name > b.name ? 1 : -1));
-      }
-    );
+    // this.pokemons.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 
   filtrarPokemon(event: string) {
-    this.dataToShow = this.pokemons;
-    this.dataToShow = this.dataToShow.filter(pokemon =>
-      pokemon.name.toLowerCase().includes(event.toLowerCase())
+    this.$pokemonsFetch = this.store.pipe(
+      select(filterPokemonsByName, { name: event })
     );
   }
 
   filtrarTipo(tiposSeleccionados: string[]) {
-    let pokemonTemp: Pokemon[] = [];
-    const temp = [];
-    if (tiposSeleccionados.length < 1)
-      return (this.dataToShow = [...this.pokemons]);
-    this.pokemons.map(pokemon => {
-      pokemon.types.forEach((tipo, idx) => {
-        tiposSeleccionados.forEach(valor => {
-          if (tipo.type.name === valor) {
-            temp.push(pokemon);
-          }
-        });
-      });
-    });
-    temp.map((pokemon, idx, array) => {
-      const { name: beforeValue } = array[idx !== 0 ? idx - 1 : 0];
-      const { name: currentValue } = pokemon;
-      if (idx === 0 || beforeValue !== currentValue) {
-        pokemonTemp.push(pokemon);
-      }
-    });
-    this.dataToShow = [...pokemonTemp];
+    this.$pokemonsFetch = this.store.pipe(
+      select(filterPokemonsByType, { types: tiposSeleccionados })
+    );
   }
 }
