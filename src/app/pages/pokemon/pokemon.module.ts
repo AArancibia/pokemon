@@ -10,7 +10,8 @@ import { BuscadorComponent } from "@app/components/buscador/buscador.component";
 import { TipoPokemonPipe } from "@app/shared/pipes/tipo-pokemon.pipe";
 import { FiltroPokemonPipe } from "@app/shared/pipes/filtro-pokemon.pipe";
 import { FormsModule } from "@angular/forms";
-import { PokemonTagsComponent } from '@app/components/pokemon/pokemon-tags/pokemon-tags.component';
+import { PokemonTagsComponent } from "@app/components/pokemon/pokemon-tags/pokemon-tags.component";
+import { PokemonFormComponent } from "@app/components/pokemon/pokemon-form/pokemon-form.component";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PokemonTagsComponent } from '@app/components/pokemon/pokemon-tags/pokem
     BuscadorComponent,
     TipoPokemonPipe,
     FiltroPokemonPipe,
-    PokemonTagsComponent
+    PokemonTagsComponent,
+    PokemonFormComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +31,12 @@ import { PokemonTagsComponent } from '@app/components/pokemon/pokemon-tags/pokem
     FormsModule
   ],
   providers: [TipoPokemonPipe],
-  exports: [PokemonComponent, PokemonItemComponent, BuscadorComponent, PokemonTagsComponent]
+  exports: [
+    PokemonComponent,
+    PokemonItemComponent,
+    BuscadorComponent,
+    PokemonTagsComponent,
+    PokemonFormComponent
+  ]
 })
 export class PokemonModule {}

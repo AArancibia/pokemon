@@ -12,7 +12,8 @@ import es from "@angular/common/locales/es";
 import { SigninComponent } from "@app/auth/signin/signin.component";
 import { PagesModule } from "./pages/pages.module";
 import { FiltroPokemonPipe } from "./shared/pipes/filtro-pokemon.pipe";
-import { RootStoreModule } from './root-store/root-store.module';
+import { RootStoreModule } from "./root-store/root-store.module";
+import { PokemonFormComponent } from "./components/pokemon/pokemon-form/pokemon-form.component";
 
 registerLocaleData(es);
 

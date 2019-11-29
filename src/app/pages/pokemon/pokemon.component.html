@@ -1,7 +1,7 @@
 <div nz-row>
   <div nz-col nzMd="24">
     <app-buscador (buscar)="filtrarPokemon($event)"></app-buscador>
-    <p>{{ filtro }}</p>
+    <a routerLink="form">IR A FORM</a>
   </div>
   <div nz-col nzMd="24">
     <app-pokemon-tags (tipo)="filtrarTipo($event)"></app-pokemon-tags>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { PokemonService } from "@app/core/services/pokemon.service";
 import { Pokemon } from "@app/core/models/pokemon.model";
 import { Store, select } from "@ngrx/store";
@@ -12,14 +12,14 @@ import {
 import { Observable } from "rxjs";
 import { FetchPokemonStartAction } from "@app/root-store/pokemon/pokemon.actions";
 import { PokemonActionTypes } from "@app/root-store/pokemon/pokemon.types";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-pokemon",
   templateUrl: "./pokemon.component.html",
   styleUrls: ["./pokemon.component.scss"]
 })
-export class PokemonComponent implements OnInit {
+export class PokemonComponent implements OnInit, AfterViewInit {
   filtro: string;
   $pokemonsFetch: Observable<Pokemon[]>;
   showPokemons: Observable<boolean>;
@@ -35,7 +35,8 @@ export class PokemonComponent implements OnInit {
     this.$pokemonsFetch = this.store.pipe(select(selectAllPokemons));
   }
 
-  getPokemons() {
+  ngAfterViewInit() {
+    // this.$pokemonsFetch = this.store.pipe(select(selectAllPokemons));
     // this.pokemons.sort((a, b) => (a.name > b.name ? 1 : -1));
   }
 
